@@ -1,0 +1,50 @@
+title: 전일 시장 요약
+markets:
+  - symbol: KS11
+    name: 코스피
+    category: 국내
+    decimals: 2
+  - symbol: KQ11
+    name: 코스닥
+    category: 국내
+    decimals: 2
+  - symbol: DJI
+    name: 다우 산업
+    category: 해외
+    decimals: 2
+  - symbol: IXIC
+    name: 나스닥 종합
+    category: 해외
+    decimals: 2
+  - symbol: SSEC
+    name: 상하이 종합
+    category: 해외
+    decimals: 2
+  - symbol: N225
+    name: 니케이225
+    category: 해외
+    decimals: 2
+  - symbol: USD/KRW
+    name: 원/달러
+    category: 환율
+    decimals: 2
+  - symbol: USD/CNY
+    name: 중국 위안/달러
+    category: 환율
+    decimals: 4
+  - symbol: GC=F
+    name: 금
+    category: 상품
+    decimals: 2
+    unit: USD/트로이온스
+  - symbol: SI=F
+    name: 은
+    category: 상품
+    decimals: 2
+    unit: USD/트로이온스
+  - symbol: CL=F
+    name: WTI
+    category: 상품
+    decimals: 2
+    unit: USD/배럴
+
