@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ report.report_date }} 금융 시장 요약">
+  <title>{{ report.title }} · {{ report.report_date }}</title>
+  <style>{{ css }}</style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">DAILY FINANCE BRIEFING</p>
+      <h1>{{ report.title }}</h1>
+      <div class="meta">
+        <span>기준일 <strong>{{ report.report_date }}</strong></span>
+        <span>생성 {{ report.generated_at[:16].replace('T', ' ') }} KST</span>
+      </div>
+    </header>
+
+    {% for category, items in groups.items() %}
+    <section class="market-section" aria-labelledby="section-{{ loop.index }}">
+      <div class="section-heading">
+        <h2 id="section-{{ loop.index }}">{{ category }}</h2>
+        <span>{{ items|length }}개 지표</span>
+      </div>
+      <div class="market-grid{% if category == '상품' %} commodities{% endif %}">
+        {% for item in items %}
+        <article class="market-card">
+          <div class="card-title">
+            <h3>{{ item.name }}</h3>
+            {% if item.unit %}<span class="unit">{{ item.unit }}</span>{% endif %}
+          </div>
+          {% if item.status == 'ok' %}
+          {% set direction = 'up' if item.change_percent > 0 else ('down' if item.change_percent < 0 else 'flat') %}
+          <div class="quote">
+            <strong>{{ item.value|number(item.decimals) }}</strong>
+            <span class="change {{ direction }}">
+              {{ '▲' if direction == 'up' else ('▼' if direction == 'down' else '–') }}
+              {{ '%+.2f'|format(item.change_percent) }}%
+            </span>
+          </div>
+          <p class="date">{{ item.price_date }} 종가 · 직전 {{ item.previous_date }}</p>
+          {% else %}
+          <div class="unavailable">데이터 없음</div>
+          <p class="date">다음 실행에서 다시 확인합니다</p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <footer>
+      <p>FinanceDataReader를 통해 수집된 참고용 정보이며 투자 권유가 아닙니다.</p>
+      {% if archive|length > 1 %}
+      <nav aria-label="지난 보고서">지난 보고서
+        {% for old in archive|reverse %}
+          {% if old.report_date != report.report_date %}<a href="{{ root_prefix }}archive/{{ old.report_date }}/">{{ old.report_date }}</a>{% endif %}
+        {% endfor %}
+      </nav>
+      {% endif %}
+    </footer>
+  </main>
+</body>
+</html>
