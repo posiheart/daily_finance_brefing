@@ -48,6 +48,22 @@ jobs:
         # 저장 로직은 한 개의 run 항목만 사용합니다. 실제 명령은 별도 스크립트에 둡니다.
         shell: bash
         run: ./scripts/save-generated-output.sh
+        run: scripts/save-generated-output.sh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data output
+          git diff --cached --quiet && { echo "No changes to commit"; exit 0; }
+          git commit -m "data: add daily market summary and HTML"
+          git push
+          if [[ -n "$(git status --porcelain -- data output)" ]]; then
+          if [[ -n "$(git status --porcelain -- data)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data output
+            git commit -m "data: add daily market summary and HTML"
+            git push
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
