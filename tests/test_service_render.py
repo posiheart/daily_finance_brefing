@@ -28,6 +28,15 @@ def test_cli_writes_generated_html_to_output_by_default():
     assert parser.parse_args(["render"]).output_dir == Path("output")
 
 
+def test_workflow_runs_daily_and_commits_generated_output():
+    workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
+    save_script = Path("scripts/save-generated-output.sh").read_text(encoding="utf-8")
+
+    assert 'cron: "0 1 * * *"' in workflow
+    assert "run: scripts/save-generated-output.sh" in workflow
+    assert "path: output" in workflow
+    assert "git add data output" in save_script
+    subprocess.run(["bash", "-n", "scripts/save-generated-output.sh"], check=True)
 def test_workflow_commits_generated_output():
     workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
 

@@ -23,7 +23,7 @@ daily-finance-briefing render
 
 ## GitHub Pages 설정
 
-저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. 예약 작업은 UTC 01:07에 실행되며 한국 표준시로 오전 10시 7분입니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
+저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 매일 UTC 01:00, 즉 한국 표준시 오전 10시에 실행됩니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
 
 필요하면 Actions의 **Daily market summary → Run workflow**에서 날짜를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
 

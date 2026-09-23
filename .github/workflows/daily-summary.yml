@@ -2,8 +2,8 @@ name: Daily market summary
 
 on:
   schedule:
-    # 한국 표준시 10:07. 정각의 예약 실행 혼잡을 피합니다.
-    - cron: "7 1 * * *"
+    # 매일 한국 표준시 오전 10시(UTC 01:00)에 실행합니다.
+    - cron: "0 1 * * *"
   workflow_dispatch:
     inputs:
       report_date:
@@ -45,6 +45,7 @@ jobs:
           if [[ -n "$REPORT_DATE" ]]; then args+=(--report-date "$REPORT_DATE"); fi
           daily-finance-briefing generate "${args[@]}"
       - name: Save collected data and generated HTML
+        run: scripts/save-generated-output.sh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
