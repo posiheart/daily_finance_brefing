@@ -53,11 +53,22 @@ def test_workflow_runs_daily_and_commits_generated_output():
     workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
     save_script = Path("scripts/save-generated-output.sh").read_text(encoding="utf-8")
 
-    yaml.load(workflow, Loader=UniqueKeyLoader)
+    parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
+    steps = parsed_workflow["jobs"]["build-and-deploy"]["steps"]
+    actions = {step["uses"] for step in steps if "uses" in step}
     assert 'cron: "0 1 * * *"' in workflow
+    assert parsed_workflow["jobs"]["build-and-deploy"]["runs-on"] == "ubuntu-24.04"
+    assert actions == {
+        "actions/checkout@v7",
+        "actions/setup-python@v7",
+        "actions/configure-pages@v6",
+        "actions/upload-pages-artifact@v5",
+        "actions/deploy-pages@v5",
+    }
     assert "run: ./scripts/save-generated-output.sh" in workflow
     assert "path: output" in workflow
-    assert "git add data output" in save_script
+    assert "git add data" in save_script
+    assert "git add --force output" in save_script
     subprocess.run(["bash", "-n", "scripts/save-generated-output.sh"], check=True)
 
 
