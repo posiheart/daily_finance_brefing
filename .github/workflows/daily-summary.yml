@@ -45,6 +45,9 @@ jobs:
           if [[ -n "$REPORT_DATE" ]]; then args+=(--report-date "$REPORT_DATE"); fi
           daily-finance-briefing generate "${args[@]}"
       - name: Save collected data and generated HTML
+        # 저장 로직은 한 개의 run 항목만 사용합니다. 실제 명령은 별도 스크립트에 둡니다.
+        shell: bash
+        run: ./scripts/save-generated-output.sh
         run: scripts/save-generated-output.sh
         run: |
           git config user.name "github-actions[bot]"

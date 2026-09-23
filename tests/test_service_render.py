@@ -3,6 +3,7 @@ import subprocess
 from datetime import date
 from pathlib import Path
 
+import pytest
 import yaml
 
 from daily_finance_briefing.cli import build_parser
@@ -28,10 +29,41 @@ def test_cli_writes_generated_html_to_output_by_default():
     assert parser.parse_args(["render"]).output_dir == Path("output")
 
 
+class UniqueKeyLoader(yaml.SafeLoader):
+    pass
+
+
+def construct_unique_mapping(loader, node, deep=False):
+    mapping = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        if key in mapping:
+            raise ValueError(f"duplicate YAML key: {key}")
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+UniqueKeyLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    construct_unique_mapping,
+)
+
+
 def test_workflow_runs_daily_and_commits_generated_output():
     workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
     save_script = Path("scripts/save-generated-output.sh").read_text(encoding="utf-8")
 
+    yaml.load(workflow, Loader=UniqueKeyLoader)
+    assert 'cron: "0 1 * * *"' in workflow
+    assert "run: ./scripts/save-generated-output.sh" in workflow
+    assert "path: output" in workflow
+    assert "git add data output" in save_script
+    subprocess.run(["bash", "-n", "scripts/save-generated-output.sh"], check=True)
+
+
+def test_workflow_validation_rejects_duplicate_run_keys():
+    with pytest.raises(ValueError, match="duplicate YAML key: run"):
+        yaml.load("- name: broken\n  run: first\n  run: second\n", Loader=UniqueKeyLoader)
     assert 'cron: "0 1 * * *"' in workflow
     assert "run: scripts/save-generated-output.sh" in workflow
     assert "path: output" in workflow
