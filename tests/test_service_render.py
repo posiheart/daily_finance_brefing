@@ -43,6 +43,10 @@ def test_workflow_commits_generated_output():
     )
     subprocess.run(["bash", "-n"], input=save_step["run"], text=True, check=True)
 
+    assert "git status --porcelain -- data output" in workflow
+    assert "git add data output" in workflow
+    assert "path: output" in workflow
+
 
 def test_indices_and_commodities_use_live_yahoo_tickers():
     _, markets = load_config(Path("config/markets.yaml"))
