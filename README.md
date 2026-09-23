@@ -18,6 +18,7 @@ daily-finance-briefing generate --report-date 2026-09-19
 daily-finance-briefing render
 ```
 
+결과는 `data/YYYY-MM-DD/market-summary.json`과 `output/index.html`에 생성됩니다. 날짜별 HTML은 `output/2026-02-05_AM10.00_brief.html` 형식의 이름으로 같은 폴더에 누적됩니다. 예약 실행과 **Run workflow** 수동 실행 모두 실행할 때 생성한 HTML을 `output/`에 커밋합니다. 개별 지표 수집 실패는 `데이터 없음`으로 표시되어 다른 지표의 보고서 생성을 막지 않습니다.
 결과는 `data/YYYY-MM-DD/market-summary.json`과 `output/index.html`에 생성됩니다. 날짜별 HTML은 `output/2026-02-05_AM10.00_brief.html` 형식의 이름으로 같은 폴더에 누적됩니다. 개별 지표 수집 실패는 `데이터 없음`으로 표시되어 다른 지표의 보고서 생성을 막지 않습니다.
 
 ## GitHub Pages 설정

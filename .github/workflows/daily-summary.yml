@@ -44,13 +44,14 @@ jobs:
           args=()
           if [[ -n "$REPORT_DATE" ]]; then args+=(--report-date "$REPORT_DATE"); fi
           daily-finance-briefing generate "${args[@]}"
-      - name: Save collected data
+      - name: Save collected data and generated HTML
         run: |
+          if [[ -n "$(git status --porcelain -- data output)" ]]; then
           if [[ -n "$(git status --porcelain -- data)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data
-            git commit -m "data: add daily market summary"
+            git add data output
+            git commit -m "data: add daily market summary and HTML"
             git push
           fi
       - uses: actions/configure-pages@v5

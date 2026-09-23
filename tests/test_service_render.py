@@ -25,6 +25,14 @@ def test_cli_writes_generated_html_to_output_by_default():
     assert parser.parse_args(["render"]).output_dir == Path("output")
 
 
+def test_workflow_commits_generated_output():
+    workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
+
+    assert "git status --porcelain -- data output" in workflow
+    assert "git add data output" in workflow
+    assert "path: output" in workflow
+
+
 def test_indices_and_commodities_use_live_yahoo_tickers():
     _, markets = load_config(Path("config/markets.yaml"))
     symbols = {market.symbol: market.data_symbol for market in markets}
