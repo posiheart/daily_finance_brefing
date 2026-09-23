@@ -3,6 +3,8 @@ import subprocess
 from datetime import date
 from pathlib import Path
 
+import yaml
+
 from daily_finance_briefing.cli import build_parser
 from daily_finance_briefing.models import DailyReport, MarketSnapshot
 from daily_finance_briefing.render import render_site, report_filename
@@ -35,6 +37,24 @@ def test_workflow_runs_daily_and_commits_generated_output():
     assert "path: output" in workflow
     assert "git add data output" in save_script
     subprocess.run(["bash", "-n", "scripts/save-generated-output.sh"], check=True)
+def test_workflow_commits_generated_output():
+    workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
+
+    assert "git add data output" in workflow
+    assert "git diff --cached --quiet" in workflow
+    assert "path: output" in workflow
+
+    parsed = yaml.safe_load(workflow)
+    save_step = next(
+        step
+        for step in parsed["jobs"]["build-and-deploy"]["steps"]
+        if step.get("name") == "Save collected data and generated HTML"
+    )
+    subprocess.run(["bash", "-n"], input=save_step["run"], text=True, check=True)
+
+    assert "git status --porcelain -- data output" in workflow
+    assert "git add data output" in workflow
+    assert "path: output" in workflow
 
 
 def test_indices_and_commodities_use_live_yahoo_tickers():
