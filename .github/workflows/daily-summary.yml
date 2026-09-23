@@ -2,8 +2,8 @@ name: Daily market summary
 
 on:
   schedule:
-    # 한국 표준시 10:07. 정각의 예약 실행 혼잡을 피합니다.
-    - cron: "7 1 * * *"
+    # 매일 한국 표준시 오전 10시(UTC 01:00)에 실행합니다.
+    - cron: "0 1 * * *"
   workflow_dispatch:
     inputs:
       report_date:
@@ -44,20 +44,14 @@ jobs:
           args=()
           if [[ -n "$REPORT_DATE" ]]; then args+=(--report-date "$REPORT_DATE"); fi
           daily-finance-briefing generate "${args[@]}"
-      - name: Save collected data
-        run: |
-          if ! git diff --quiet -- data; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data
-            git commit -m "data: add daily market summary"
-            git push
-          fi
+      - name: Save collected data and generated HTML
+        # 저장 로직은 한 개의 run 항목만 사용합니다. 실제 명령은 별도 스크립트에 둡니다.
+        shell: bash
+        run: ./scripts/save-generated-output.sh
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: output
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

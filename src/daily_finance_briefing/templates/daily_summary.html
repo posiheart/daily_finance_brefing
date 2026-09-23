@@ -51,16 +51,15 @@
     </section>
     {% endfor %}
 
+    {% if archive|length > 1 %}
     <footer>
-      <p>FinanceDataReader를 통해 수집된 참고용 정보이며 투자 권유가 아닙니다.</p>
-      {% if archive|length > 1 %}
       <nav aria-label="지난 보고서">지난 보고서
         {% for old in archive|reverse %}
-          {% if old.report_date != report.report_date %}<a href="{{ root_prefix }}archive/{{ old.report_date }}/">{{ old.report_date }}</a>{% endif %}
+          {% if old.report_date != report.report_date %}<a href="{{ root_prefix }}{{ old|report_filename }}">{{ old.report_date }}</a>{% endif %}
         {% endfor %}
       </nav>
-      {% endif %}
     </footer>
+    {% endif %}
   </main>
 </body>
 </html>
