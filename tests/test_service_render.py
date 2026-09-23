@@ -1,9 +1,10 @@
 import json
 from datetime import date
+from pathlib import Path
 
 from daily_finance_briefing.models import MarketSnapshot
 from daily_finance_briefing.render import render_site
-from daily_finance_briefing.service import collect_report, write_report
+from daily_finance_briefing.service import collect_report, load_config, write_report
 
 
 class StubProvider:
@@ -14,6 +15,14 @@ class StubProvider:
             previous_value=100, change_percent=5, price_date="2026-09-18",
             previous_date="2026-09-17",
         )
+
+
+def test_korean_indices_use_yahoo_index_tickers():
+    _, markets = load_config(Path("config/markets.yaml"))
+    symbols = {market.symbol: market.data_symbol for market in markets}
+
+    assert symbols["KS11"] == "YAHOO:^KS11"
+    assert symbols["KQ11"] == "YAHOO:^KQ11"
 
 
 def test_collect_write_and_render(tmp_path):
@@ -27,4 +36,3 @@ def test_collect_write_and_render(tmp_path):
     assert "전일 시장 요약" in html
     assert "▲" in html
     assert "+5.00%" in html
-

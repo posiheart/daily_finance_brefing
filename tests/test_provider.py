@@ -33,12 +33,12 @@ def test_snapshot_uses_configured_data_symbol_but_keeps_report_symbol():
 
     provider = FinanceDataProvider(reader=reader, retry_delay=0)
     market = MarketDefinition(
-        "KS11", "코스피", "국내", data_symbol="NAVER:KS11"
+        "KS11", "코스피", "국내", data_symbol="YAHOO:^KS11"
     )
 
     result = provider.snapshot(market, date(2026, 9, 23))
 
-    assert calls == [("NAVER:KS11", "2026-09-09", "2026-09-23")]
+    assert calls == [("YAHOO:^KS11", "2026-09-09", "2026-09-23")]
     assert result.symbol == "KS11"
     assert result.price_date == "2026-09-22"
 
