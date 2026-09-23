@@ -15,17 +15,17 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--report-date", help="기준일(YYYY-MM-DD)")
     generate.add_argument("--config", type=Path, default=Path("config/markets.yaml"))
     generate.add_argument("--data-dir", type=Path, default=Path("data"))
-    generate.add_argument("--public-dir", type=Path, default=Path("public"))
+    generate.add_argument("--output-dir", type=Path, default=Path("output"))
     render = subparsers.add_parser("render", help="저장된 JSON으로 사이트만 재생성")
     render.add_argument("--data-dir", type=Path, default=Path("data"))
-    render.add_argument("--public-dir", type=Path, default=Path("public"))
+    render.add_argument("--output-dir", type=Path, default=Path("output"))
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
     if args.command == "render":
-        render_site(args.data_dir, args.public_dir)
+        render_site(args.data_dir, args.output_dir)
         return
     report_date = (
         datetime.strptime(args.report_date, "%Y-%m-%d").date()
@@ -34,7 +34,7 @@ def main() -> None:
     )
     report = collect_report(args.config, report_date)
     write_report(report, args.data_dir)
-    render_site(args.data_dir, args.public_dir)
+    render_site(args.data_dir, args.output_dir)
     failed = sum(item.status != "ok" for item in report.snapshots)
     print(f"{report.report_date}: {len(report.snapshots) - failed}개 성공, {failed}개 누락")
 
