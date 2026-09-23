@@ -27,9 +27,9 @@ class FinanceDataProvider:
     def snapshot(self, market: MarketDefinition, report_date: date) -> MarketSnapshot:
         start = report_date - timedelta(days=14)
         try:
-            # FinanceDataReader's bare KS11/KQ11 aliases use its GitHub cache,
-            # which can lag behind the latest trading day. A configured source
-            # symbol lets time-sensitive indices use Yahoo's index tickers
+            # Some FinanceDataReader bare symbols use its GitHub cache, which
+            # can lag behind the latest trading day. A configured source symbol
+            # lets time-sensitive indices and commodities query Yahoo directly
             # without changing the stable symbol stored in reports.
             frame = self._read(market.data_symbol or market.symbol, start, report_date)
             close = frame["Close"].dropna()
