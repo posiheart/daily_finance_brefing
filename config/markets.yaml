@@ -1,10 +1,12 @@
 title: 전일 시장 요약
 markets:
   - symbol: KS11
+    data_symbol: YAHOO:^KS11
     name: 코스피
     category: 국내
     decimals: 2
   - symbol: KQ11
+    data_symbol: YAHOO:^KQ11
     name: 코스닥
     category: 국내
     decimals: 2
@@ -47,4 +49,3 @@ markets:
     category: 상품
     decimals: 2
     unit: USD/배럴
-

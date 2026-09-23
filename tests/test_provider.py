@@ -20,6 +20,29 @@ def test_snapshot_uses_latest_two_non_null_closes():
     assert result.price_date == "2026-09-18"
 
 
+def test_snapshot_uses_configured_data_symbol_but_keeps_report_symbol():
+    calls = []
+    frame = pd.DataFrame(
+        {"Close": [100.0, 101.0]},
+        index=pd.to_datetime(["2026-09-21", "2026-09-22"]),
+    )
+
+    def reader(symbol, start, end):
+        calls.append((symbol, start, end))
+        return frame
+
+    provider = FinanceDataProvider(reader=reader, retry_delay=0)
+    market = MarketDefinition(
+        "KS11", "코스피", "국내", data_symbol="YAHOO:^KS11"
+    )
+
+    result = provider.snapshot(market, date(2026, 9, 23))
+
+    assert calls == [("YAHOO:^KS11", "2026-09-09", "2026-09-23")]
+    assert result.symbol == "KS11"
+    assert result.price_date == "2026-09-22"
+
+
 def test_snapshot_returns_unavailable_instead_of_stopping_report():
     def fail(*_):
         raise ConnectionError("temporary")

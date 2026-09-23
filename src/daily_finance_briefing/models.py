@@ -12,6 +12,7 @@ class MarketDefinition:
     category: str
     decimals: int = 2
     unit: str = ""
+    data_symbol: str | None = None
 
 
 @dataclass(frozen=True)
@@ -58,4 +59,3 @@ def iso_date(value: Any) -> str:
     if hasattr(value, "date"):
         return value.date().isoformat()
     return str(value)[:10]
-
