@@ -11,18 +11,22 @@ markets:
     category: 국내
     decimals: 2
   - symbol: DJI
+    data_symbol: YAHOO:^DJI
     name: 다우 산업
     category: 해외
     decimals: 2
   - symbol: IXIC
+    data_symbol: YAHOO:^IXIC
     name: 나스닥 종합
     category: 해외
     decimals: 2
   - symbol: SSEC
+    data_symbol: YAHOO:000001.SS
     name: 상하이 종합
     category: 해외
     decimals: 2
   - symbol: N225
+    data_symbol: YAHOO:^N225
     name: 니케이225
     category: 해외
     decimals: 2
@@ -35,16 +39,19 @@ markets:
     category: 환율
     decimals: 4
   - symbol: GC=F
+    data_symbol: YAHOO:GC=F
     name: 금
     category: 상품
     decimals: 2
     unit: USD/트로이온스
   - symbol: SI=F
+    data_symbol: YAHOO:SI=F
     name: 은
     category: 상품
     decimals: 2
     unit: USD/트로이온스
   - symbol: CL=F
+    data_symbol: YAHOO:CL=F
     name: WTI
     category: 상품
     decimals: 2
