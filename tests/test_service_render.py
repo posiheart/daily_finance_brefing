@@ -1,6 +1,9 @@
 import json
+import subprocess
 from datetime import date
 from pathlib import Path
+
+import yaml
 
 from daily_finance_briefing.cli import build_parser
 from daily_finance_briefing.models import DailyReport, MarketSnapshot
@@ -27,6 +30,18 @@ def test_cli_writes_generated_html_to_output_by_default():
 
 def test_workflow_commits_generated_output():
     workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
+
+    assert "git add data output" in workflow
+    assert "git diff --cached --quiet" in workflow
+    assert "path: output" in workflow
+
+    parsed = yaml.safe_load(workflow)
+    save_step = next(
+        step
+        for step in parsed["jobs"]["build-and-deploy"]["steps"]
+        if step.get("name") == "Save collected data and generated HTML"
+    )
+    subprocess.run(["bash", "-n"], input=save_step["run"], text=True, check=True)
 
     assert "git status --porcelain -- data output" in workflow
     assert "git add data output" in workflow
