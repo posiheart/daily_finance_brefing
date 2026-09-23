@@ -3,7 +3,11 @@ set -euo pipefail
 
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-git add data output
+# `output/` is intentionally ignored for local development, so it must be
+# forced into the daily snapshot commit. Without `--force`, `git add` exits
+# with status 1 and stops the workflow before the Pages deployment.
+git add data
+git add --force output
 
 if git diff --cached --quiet; then
   echo "No changes to commit"

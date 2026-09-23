@@ -22,14 +22,16 @@ permissions:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    # Pin the runner image so an ubuntu-latest migration cannot change the
+    # build environment without an explicit update here.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -48,10 +50,10 @@ jobs:
         # 저장 로직은 한 개의 run 항목만 사용합니다. 실제 명령은 별도 스크립트에 둡니다.
         shell: bash
         run: ./scripts/save-generated-output.sh
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: output
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
