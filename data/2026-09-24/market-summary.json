@@ -1,7 +1,7 @@
 {
   "title": "전일 시장 요약",
   "report_date": "2026-09-24",
-  "generated_at": "2026-09-24T15:19:35+09:00",
+  "generated_at": "2026-09-24T15:55:33+09:00",
   "timezone": "Asia/Seoul",
   "snapshots": [
     {
@@ -67,9 +67,9 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 3892.23828125,
+      "value": 3891.978515625,
       "previous_value": 3936.52001953125,
-      "change_percent": -1.1248955438190045,
+      "change_percent": -1.1314944083925638,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -81,9 +81,9 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 65590.2578125,
+      "value": 65513.98828125,
       "previous_value": 65018.94921875,
-      "change_percent": 0.8786801395818999,
+      "change_percent": 0.7613765962819263,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-18",
       "error": null
@@ -123,9 +123,9 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 4318.7001953125,
+      "value": 4312.2998046875,
       "previous_value": 4318.39990234375,
-      "change_percent": 0.006953801767806134,
+      "change_percent": -0.1412582853417388,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -137,9 +137,9 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 64.56500244140625,
+      "value": 64.57499694824219,
       "previous_value": 64.38200378417969,
-      "change_percent": 0.28423883456627497,
+      "change_percent": 0.299762593145525,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -151,9 +151,9 @@
       "decimals": 2,
       "unit": "USD/배럴",
       "status": "ok",
-      "value": 92.0,
+      "value": 92.75,
       "previous_value": 92.16000366210938,
-      "change_percent": -0.1736150778552492,
+      "change_percent": 0.6401869731404997,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
