@@ -1,7 +1,7 @@
 {
   "title": "전일 시장 요약",
   "report_date": "2026-09-24",
-  "generated_at": "2026-09-24T13:48:16+09:00",
+  "generated_at": "2026-09-24T15:00:05+09:00",
   "timezone": "Asia/Seoul",
   "snapshots": [
     {
@@ -67,9 +67,9 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 3899.99658203125,
+      "value": 3902.6962890625,
       "previous_value": 3936.52001953125,
-      "change_percent": -0.9278102821473566,
+      "change_percent": -0.8592292253292722,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -81,9 +81,9 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 65832.03125,
+      "value": 65781.546875,
       "previous_value": 65018.94921875,
-      "change_percent": 1.2505308698768092,
+      "change_percent": 1.1728852364013331,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-18",
       "error": null
@@ -95,11 +95,11 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 1371.75,
-      "previous_value": 1350.3599853515625,
-      "change_percent": 1.5840231405308325,
-      "price_date": "2026-09-24",
-      "previous_date": "2026-09-22",
+      "value": 1350.3599853515625,
+      "previous_value": 1373.6800537109375,
+      "change_percent": -1.6976346345262017,
+      "price_date": "2026-09-22",
+      "previous_date": "2026-09-21",
       "error": null
     },
     {
@@ -109,11 +109,11 @@
       "decimals": 4,
       "unit": "",
       "status": "ok",
-      "value": 6.7133002281188965,
-      "previous_value": 6.6996002197265625,
-      "change_percent": 0.2044899388473187,
-      "price_date": "2026-09-24",
-      "previous_date": "2026-09-22",
+      "value": 6.6996002197265625,
+      "previous_value": 6.695300102233887,
+      "change_percent": 0.0642259111169885,
+      "price_date": "2026-09-22",
+      "previous_date": "2026-09-21",
       "error": null
     },
     {
@@ -123,9 +123,9 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 4322.89990234375,
+      "value": 4318.5,
       "previous_value": 4318.39990234375,
-      "change_percent": 0.10420526356436088,
+      "change_percent": 0.0023179339226020446,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -137,9 +137,9 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 64.62999725341797,
+      "value": 64.58000183105469,
       "previous_value": 64.38200378417969,
-      "change_percent": 0.385190666120927,
+      "change_percent": 0.30753632263251784,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
@@ -151,9 +151,9 @@
       "decimals": 2,
       "unit": "USD/배럴",
       "status": "ok",
-      "value": 91.44999694824219,
+      "value": 91.91000366210938,
       "previous_value": 92.16000366210938,
-      "change_percent": -0.770406559954484,
+      "change_percent": -0.2712673503319163,
       "price_date": "2026-09-24",
       "previous_date": "2026-09-23",
       "error": null
