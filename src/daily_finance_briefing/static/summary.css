@@ -1,0 +1,54 @@
+:root {
+  color-scheme: light;
+  --ink: #18243b;
+  --muted: #78849a;
+  --line: #e6eaf0;
+  --surface: #ffffff;
+  --canvas: #f4f6f9;
+  --up: #d76055;
+  --down: #2984af;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.page { width: min(760px, calc(100% - 32px)); margin: 48px auto; }
+.hero { margin-bottom: 38px; }
+.eyebrow { margin: 0 0 8px; color: #5665d8; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+h1 { margin: 0; font-size: clamp(30px, 6vw, 44px); letter-spacing: -.05em; }
+.meta { display: flex; gap: 16px; margin-top: 14px; color: var(--muted); font-size: 13px; }
+.market-section { margin: 32px 0; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 12px; }
+.section-heading h2 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+.section-heading span { color: var(--muted); font-size: 12px; }
+.market-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--line); box-shadow: 0 12px 28px rgba(31, 45, 68, .06); }
+.market-card { min-height: 132px; padding: 22px; background: var(--surface); }
+.card-title { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.card-title h3 { margin: 0; font-size: 15px; }
+.unit { color: var(--muted); font-size: 10px; }
+.quote { display: flex; align-items: baseline; gap: 10px; margin-top: 17px; }
+.quote strong { font-size: 23px; letter-spacing: -.03em; }
+.change { font-size: 13px; font-weight: 800; }
+.up { color: var(--up); }
+.down { color: var(--down); }
+.flat { color: var(--muted); }
+.date { margin: 9px 0 0; color: var(--muted); font-size: 11px; }
+.unavailable { margin-top: 20px; color: var(--muted); font-size: 18px; font-weight: 700; }
+footer { margin: 42px 0; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px; }
+footer a { color: #5665d8; }
+@media (max-width: 560px) {
+  .page { margin-top: 28px; }
+  .meta { flex-direction: column; gap: 4px; }
+  .market-grid { grid-template-columns: 1fr; }
+  .market-card { min-height: 120px; }
+}
+@media print {
+  body { background: white; }
+  .page { width: 100%; margin: 0; }
+  .market-grid { box-shadow: none; break-inside: avoid; }
+}
+
