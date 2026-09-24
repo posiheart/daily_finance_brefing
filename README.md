@@ -24,7 +24,7 @@ daily-finance-briefing render
 
 ## GitHub Actions 설정
 
-`.github/workflows/daily-market-briefing.yml`은 참고 저장소와 같은 `ubuntu-latest`, Python 3.11, `Asia/Seoul` 환경을 사용하며, 평일 오전 10시 17분(KST), 즉 UTC 01시 17분(`17 1 * * 1-5`)에 기본 브랜치에서 실행됩니다. 생성된 `data/`와 `output/`은 변경이 있을 때 GitHub Actions 봇이 기본 브랜치에 커밋합니다. GitHub Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
+`.github/workflows/daily-market-briefing.yml`은 현재 예약 실행 확인을 위해 매시 `02, 07, 12, ... 57`분(`2-59/5 * * * *`)에 실행을 요청합니다. 정각은 GitHub Actions 예약 작업의 부하가 집중될 수 있어 피했습니다. 이 예약은 정확한 5분 주기를 보장하지 않으며 서비스 부하에 따라 지연되거나 누락될 수 있습니다. 테스트가 끝나면 평일 오전 10시 17분(KST), 즉 UTC 01시 17분(`17 1 * * 1-5`)으로 되돌려야 합니다. 워크플로는 `ubuntu-latest`, Python 3.11, `Asia/Seoul` 환경을 사용하며, 생성된 `output/`은 변경이 있을 때 GitHub Actions 봇이 기본 브랜치에 커밋합니다.
 
 필요하면 Actions의 **Daily Market Briefing → Run workflow**에서 `target_date`를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
 
