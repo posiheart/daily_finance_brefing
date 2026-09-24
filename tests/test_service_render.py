@@ -53,6 +53,7 @@ def test_workflow_runs_every_five_minutes_and_commits_generated_output():
 
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
     job = parsed_workflow["jobs"]["generate-briefing"]
+    deploy_job = parsed_workflow["jobs"]["deploy-pages"]
     steps = job["steps"]
     actions = {step["uses"] for step in steps if "uses" in step}
     assert 'cron: "*/5 * * * *"' in workflow
@@ -61,11 +62,16 @@ def test_workflow_runs_every_five_minutes_and_commits_generated_output():
     assert actions == {
         "actions/checkout@v4",
         "actions/setup-python@v5",
-        "actions/configure-pages@v6",
         "actions/upload-pages-artifact@v5",
+    }
+    assert deploy_job["needs"] == "generate-briefing"
+    assert {step["uses"] for step in deploy_job["steps"]} == {
+        "actions/configure-pages@v6",
         "actions/deploy-pages@v5",
     }
-    assert "github.event.inputs.target_date" in workflow
+    assert job["permissions"] == {"contents": "write"}
+    assert deploy_job["permissions"] == {"pages": "write", "id-token": "write"}
+    assert "TARGET_DATE: ${{ inputs.target_date }}" in workflow
     assert "path: output" in workflow
     assert "git add data/" in workflow
     assert "git add --force output/" in workflow

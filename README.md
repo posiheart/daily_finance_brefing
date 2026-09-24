@@ -22,7 +22,7 @@ daily-finance-briefing render
 
 ## GitHub Pages 설정
 
-저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 UTC 기준으로 5분마다 실행됩니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
+저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 기본 브랜치의 워크플로에서 UTC 기준 매 5분(`*/5 * * * *`)마다 실행됩니다. 보고서 생성·커밋 작업은 Pages 배포 작업과 분리되어 있으므로 Pages 환경 승인이 대기 중이거나 배포 설정에 문제가 생겨도 다음 예약 보고서 생성 자체를 막지 않습니다. 다만 GitHub Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있으며 정확히 5분 간격의 실행을 보장하지는 않습니다.
 
 필요하면 Actions의 **Daily Market Briefing → Run workflow**에서 `target_date`를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
 
