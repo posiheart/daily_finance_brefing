@@ -49,7 +49,7 @@ UniqueKeyLoader.add_constructor(
 
 
 def test_workflow_runs_every_five_minutes_and_commits_generated_output():
-    workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
+    workflow = Path(".github/workflows/daily-market-briefing.yml").read_text(encoding="utf-8")
 
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
     job = parsed_workflow["jobs"]["generate-briefing"]
@@ -59,6 +59,7 @@ def test_workflow_runs_every_five_minutes_and_commits_generated_output():
     assert 'cron: "*/5 * * * *"' in workflow
     assert job["runs-on"] == "ubuntu-latest"
     assert job["env"]["TZ"] == "Asia/Seoul"
+    assert Path(".python-version").read_text(encoding="utf-8").strip() == "3.11"
     assert actions == {
         "actions/checkout@v4",
         "actions/setup-python@v5",
@@ -70,6 +71,11 @@ def test_workflow_runs_every_five_minutes_and_commits_generated_output():
         "actions/deploy-pages@v5",
     }
     assert job["permissions"] == {"contents": "write"}
+    setup_python = next(step for step in steps if step.get("uses") == "actions/setup-python@v5")
+    assert setup_python["with"] == {
+        "python-version-file": ".python-version",
+        "cache": "pip",
+    }
     assert deploy_job["permissions"] == {"pages": "write", "id-token": "write"}
     assert "TARGET_DATE: ${{ inputs.target_date }}" in workflow
     assert "path: output" in workflow
