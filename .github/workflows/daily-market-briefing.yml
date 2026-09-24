@@ -32,7 +32,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          # Keep local development and Actions on the same Python line.
+          python-version-file: ".python-version"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
