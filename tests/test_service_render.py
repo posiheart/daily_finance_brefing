@@ -48,7 +48,7 @@ UniqueKeyLoader.add_constructor(
 )
 
 
-def test_workflow_runs_every_five_minutes_and_commits_generated_output():
+def test_workflow_runs_daily_at_0117_utc_and_commits_generated_output():
     workflow = Path(".github/workflows/daily-market-briefing.yml").read_text(encoding="utf-8")
 
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
@@ -56,7 +56,7 @@ def test_workflow_runs_every_five_minutes_and_commits_generated_output():
     deploy_job = parsed_workflow["jobs"]["deploy-pages"]
     steps = job["steps"]
     actions = {step["uses"] for step in steps if "uses" in step}
-    assert 'cron: "*/5 * * * *"' in workflow
+    assert 'cron: "17 1 * * *"' in workflow
     assert job["runs-on"] == "ubuntu-latest"
     assert job["env"]["TZ"] == "Asia/Seoul"
     assert Path(".python-version").read_text(encoding="utf-8").strip() == "3.11"
