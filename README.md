@@ -19,13 +19,12 @@ daily-finance-briefing render
 ```
 
 결과는 `data/YYYY-MM-DD/market-summary.json`과 `output/index.html`에 생성됩니다. 날짜별 HTML은 `output/2026-02-05_AM10.00_brief.html` 형식의 이름으로 같은 폴더에 누적됩니다. 예약 실행과 **Run workflow** 수동 실행 모두 실행할 때 생성한 HTML을 `output/`에 커밋합니다. 개별 지표 수집 실패는 `데이터 없음`으로 표시되어 다른 지표의 보고서 생성을 막지 않습니다.
-결과는 `data/YYYY-MM-DD/market-summary.json`과 `output/index.html`에 생성됩니다. 날짜별 HTML은 `output/2026-02-05_AM10.00_brief.html` 형식의 이름으로 같은 폴더에 누적됩니다. 개별 지표 수집 실패는 `데이터 없음`으로 표시되어 다른 지표의 보고서 생성을 막지 않습니다.
 
 ## GitHub Pages 설정
 
 저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 UTC 기준으로 5분마다 실행됩니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
 
-필요하면 Actions의 **Daily market summary → Run workflow**에서 날짜를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
+필요하면 Actions의 **Daily Market Briefing → Run workflow**에서 `target_date`를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
 
 ## 데이터 주의사항
 

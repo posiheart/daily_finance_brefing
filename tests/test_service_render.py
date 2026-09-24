@@ -1,5 +1,4 @@
 import json
-import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -49,27 +48,27 @@ UniqueKeyLoader.add_constructor(
 )
 
 
-def test_workflow_runs_daily_and_commits_generated_output():
+def test_workflow_runs_every_five_minutes_and_commits_generated_output():
     workflow = Path(".github/workflows/daily-summary.yml").read_text(encoding="utf-8")
-    save_script = Path("scripts/save-generated-output.sh").read_text(encoding="utf-8")
 
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
-    steps = parsed_workflow["jobs"]["build-and-deploy"]["steps"]
+    job = parsed_workflow["jobs"]["generate-briefing"]
+    steps = job["steps"]
     actions = {step["uses"] for step in steps if "uses" in step}
     assert 'cron: "*/5 * * * *"' in workflow
-    assert parsed_workflow["jobs"]["build-and-deploy"]["runs-on"] == "ubuntu-24.04"
+    assert job["runs-on"] == "ubuntu-latest"
+    assert job["env"]["TZ"] == "Asia/Seoul"
     assert actions == {
-        "actions/checkout@v7",
-        "actions/setup-python@v7",
+        "actions/checkout@v4",
+        "actions/setup-python@v5",
         "actions/configure-pages@v6",
         "actions/upload-pages-artifact@v5",
         "actions/deploy-pages@v5",
     }
-    assert "run: ./scripts/save-generated-output.sh" in workflow
+    assert "github.event.inputs.target_date" in workflow
     assert "path: output" in workflow
-    assert "git add data" in save_script
-    assert "git add --force output" in save_script
-    subprocess.run(["bash", "-n", "scripts/save-generated-output.sh"], check=True)
+    assert "git add data/" in workflow
+    assert "git add --force output/" in workflow
 
 
 def test_workflow_validation_rejects_duplicate_run_keys():
