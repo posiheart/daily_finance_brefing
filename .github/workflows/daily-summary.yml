@@ -11,11 +11,6 @@ on:
         required: false
         type: string
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 concurrency:
   group: daily-market-briefing
   cancel-in-progress: false
@@ -23,11 +18,11 @@ concurrency:
 jobs:
   generate-briefing:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
     env:
       TZ: Asia/Seoul
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,8 +40,9 @@ jobs:
           pip install .
 
       - name: Generate previous-day market briefing HTML
+        env:
+          TARGET_DATE: ${{ inputs.target_date }}
         run: |
-          TARGET_DATE="${{ github.event.inputs.target_date }}"
           if [ -n "$TARGET_DATE" ]; then
             echo "Run with target date: $TARGET_DATE"
             daily-finance-briefing generate --report-date "$TARGET_DATE"
@@ -67,10 +63,25 @@ jobs:
             git push
           fi
 
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
           path: output
+
+  deploy-pages:
+    needs: generate-briefing
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
