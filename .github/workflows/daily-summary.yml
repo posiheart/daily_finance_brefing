@@ -1,55 +1,72 @@
-name: Daily market summary
+name: Daily Market Briefing
 
 on:
   schedule:
-    # GitHub Actions가 지원하는 최소 예약 간격인 5분마다 실행합니다.
+    # GitHub Actions의 최소 예약 간격인 5분마다 실행합니다.
     - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
-      report_date:
-        description: "보고서 기준일 (YYYY-MM-DD, 비워두면 오늘)"
+      target_date:
+        description: "테스트용 기준일 (YYYY-MM-DD, 예: 2025-02-14)"
         required: false
         type: string
-
-concurrency:
-  group: daily-market-summary
-  cancel-in-progress: false
 
 permissions:
   contents: write
   pages: write
   id-token: write
 
+concurrency:
+  group: daily-market-briefing
+  cancel-in-progress: false
+
 jobs:
-  build-and-deploy:
-    # Pin the runner image so an ubuntu-latest migration cannot change the
-    # build environment without an explicit update here.
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
+  generate-briefing:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Seoul
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          python-version: "3.12"
-          cache: pip
-      - name: Install
-        run: python -m pip install .[test]
-      - name: Test
-        run: pytest -q
-      - name: Generate report
-        env:
-          REPORT_DATE: ${{ inputs.report_date }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
         run: |
-          args=()
-          if [[ -n "$REPORT_DATE" ]]; then args+=(--report-date "$REPORT_DATE"); fi
-          daily-finance-briefing generate "${args[@]}"
-      - name: Save collected data and generated HTML
-        # 저장 로직은 한 개의 run 항목만 사용합니다. 실제 명령은 별도 스크립트에 둡니다.
-        shell: bash
-        run: ./scripts/save-generated-output.sh
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Generate previous-day market briefing HTML
+        run: |
+          TARGET_DATE="${{ github.event.inputs.target_date }}"
+          if [ -n "$TARGET_DATE" ]; then
+            echo "Run with target date: $TARGET_DATE"
+            daily-finance-briefing generate --report-date "$TARGET_DATE"
+          else
+            daily-finance-briefing generate
+          fi
+
+      - name: Commit generated HTML (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git add --force output/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update daily market briefing html"
+            git push
+          fi
+
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
