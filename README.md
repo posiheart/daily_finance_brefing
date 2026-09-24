@@ -1,6 +1,6 @@
 # Daily Finance Briefing
 
-FinanceDataReader로 국내외 지수, 환율, 상품의 최근 두 거래일 종가를 수집하고 전일 대비 등락률을 담은 정적 HTML을 만듭니다. GitHub Actions가 매일 한국 시간 오전 10시 7분에 보고서를 생성하고 GitHub Pages에 배포합니다.
+FinanceDataReader로 국내외 지수, 환율, 상품의 최근 두 거래일 종가를 수집하고 전일 대비 등락률을 담은 정적 HTML을 만듭니다. GitHub Actions가 5분마다 보고서를 생성하고 GitHub Pages에 배포합니다.
 
 ## 로컬 실행
 
@@ -23,7 +23,7 @@ daily-finance-briefing render
 
 ## GitHub Pages 설정
 
-저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 매일 UTC 01:00, 즉 한국 표준시 오전 10시에 실행됩니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
+저장소의 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 선택합니다. GitHub Actions 예약 작업은 UTC 기준으로 5분마다 실행됩니다. Actions의 예약 실행은 서비스 부하에 따라 지연될 수 있습니다.
 
 필요하면 Actions의 **Daily market summary → Run workflow**에서 날짜를 입력해 수동으로 다시 생성할 수 있습니다. 보호된 기본 브랜치에서 Actions의 직접 push가 차단되어 있다면 `data/` 저장용 브랜치를 별도로 사용하도록 워크플로를 조정해야 합니다.
 
