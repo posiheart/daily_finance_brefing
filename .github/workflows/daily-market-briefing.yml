@@ -2,9 +2,10 @@ name: Daily Market Briefing
 
 on:
   schedule:
-    # KST 10:17 = UTC 01:17
-    #- cron: "17 1 * * 1-5"
-    - cron: "*/5 * * * *"
+    # Five-minute test schedule. Start at :02 to avoid GitHub Actions' busiest
+    # scheduling window at the beginning of every hour. Scheduled runs may
+    # still be delayed or dropped; use workflow_dispatch for an immediate run.
+    - cron: "2-59/5 * * * *"
   workflow_dispatch:
     inputs:
       target_date:
