@@ -26,14 +26,35 @@ class FinanceDataProvider:
 
     def snapshot(self, market: MarketDefinition, report_date: date) -> MarketSnapshot:
         start = report_date - timedelta(days=14)
+        source_symbol = market.data_symbol or market.symbol
+        # FinanceDataReader's Yahoo backend treats the end date as exclusive.
+        # Request the following calendar day so a close dated on report_date is
+        # included instead of silently falling back to an older trading day.
+        end = (
+            report_date + timedelta(days=1)
+            if source_symbol.startswith("YAHOO:")
+            else report_date
+        )
         try:
             # Some FinanceDataReader bare symbols use its GitHub cache, which
             # can lag behind the latest trading day. A configured source symbol
             # lets time-sensitive indices and commodities query Yahoo directly
             # without changing the stable symbol stored in reports.
-            frame = self._read(market.data_symbol or market.symbol, start, report_date)
+            frame = self._read(source_symbol, start, end)
             close = frame["Close"].dropna()
             close = close[~close.index.duplicated(keep="last")].sort_index()
+            if (
+                source_symbol.startswith("YAHOO:")
+                and len(close) > 0
+                and iso_date(close.index[-1]) < report_date.isoformat()
+            ):
+                # A query that includes today can occasionally return a stale
+                # cached range. Query again with today as the exclusive bound;
+                # this asks Yahoo specifically for data through yesterday.
+                fallback_frame = self._read(source_symbol, start, report_date)
+                fallback_close = fallback_frame["Close"].dropna()
+                close = fallback_close.combine_first(close)
+                close = close[~close.index.duplicated(keep="last")].sort_index()
             if len(close) < 2:
                 raise ValueError("최근 종가가 2개 미만입니다")
             previous, latest = float(close.iloc[-2]), float(close.iloc[-1])

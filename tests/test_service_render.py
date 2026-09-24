@@ -56,7 +56,7 @@ def test_workflow_runs_daily_and_commits_generated_output():
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
     steps = parsed_workflow["jobs"]["build-and-deploy"]["steps"]
     actions = {step["uses"] for step in steps if "uses" in step}
-    assert 'cron: "0 1 * * *"' in workflow
+    assert 'cron: "*/5 * * * *"' in workflow
     assert parsed_workflow["jobs"]["build-and-deploy"]["runs-on"] == "ubuntu-24.04"
     assert actions == {
         "actions/checkout@v7",

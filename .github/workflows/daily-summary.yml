@@ -2,8 +2,8 @@ name: Daily market summary
 
 on:
   schedule:
-    # 매일 한국 표준시 오전 10시(UTC 01:00)에 실행합니다.
-    - cron: "0 1 * * *"
+    # GitHub Actions가 지원하는 최소 예약 간격인 5분마다 실행합니다.
+    - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
       report_date:
