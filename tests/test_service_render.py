@@ -48,39 +48,31 @@ UniqueKeyLoader.add_constructor(
 )
 
 
-def test_workflow_runs_every_five_minutes_and_commits_generated_output():
+def test_workflow_runs_weekdays_and_commits_generated_output():
     workflow = Path(".github/workflows/daily-market-briefing.yml").read_text(encoding="utf-8")
 
     parsed_workflow = yaml.load(workflow, Loader=UniqueKeyLoader)
     job = parsed_workflow["jobs"]["generate-briefing"]
-    deploy_job = parsed_workflow["jobs"]["deploy-pages"]
     steps = job["steps"]
     actions = {step["uses"] for step in steps if "uses" in step}
-    assert 'cron: "*/5 * * * *"' in workflow
+    assert 'cron: "17 1 * * 1-5"' in workflow
     assert job["runs-on"] == "ubuntu-latest"
     assert job["env"]["TZ"] == "Asia/Seoul"
     assert Path(".python-version").read_text(encoding="utf-8").strip() == "3.11"
     assert actions == {
         "actions/checkout@v4",
         "actions/setup-python@v5",
-        "actions/upload-pages-artifact@v5",
     }
-    assert deploy_job["needs"] == "generate-briefing"
-    assert {step["uses"] for step in deploy_job["steps"]} == {
-        "actions/configure-pages@v6",
-        "actions/deploy-pages@v5",
-    }
-    assert job["permissions"] == {"contents": "write"}
+    assert parsed_workflow["permissions"] == {"contents": "write"}
     setup_python = next(step for step in steps if step.get("uses") == "actions/setup-python@v5")
-    assert setup_python["with"] == {
-        "python-version-file": ".python-version",
-        "cache": "pip",
-    }
-    assert deploy_job["permissions"] == {"pages": "write", "id-token": "write"}
-    assert "TARGET_DATE: ${{ inputs.target_date }}" in workflow
-    assert "path: output" in workflow
-    assert "git add data/" in workflow
-    assert "git add --force output/" in workflow
+    assert setup_python["with"] == {"python-version": "3.11"}
+    assert "TARGET_DATE=\"${{ github.event.inputs.target_date }}\"" in workflow
+    assert "deploy-pages" not in parsed_workflow["jobs"]
+    commit_script = next(step for step in steps if step["name"].startswith("Commit"))["run"]
+    assert "git add data/" in commit_script
+    assert "git add --force output/" in commit_script
+    assert "git diff --staged --quiet" in commit_script
+    assert "git push" in commit_script
 
 
 def test_workflow_validation_rejects_duplicate_run_keys():
