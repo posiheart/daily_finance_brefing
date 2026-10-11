@@ -1,7 +1,7 @@
 {
   "title": "전일 시장 요약",
-  "report_date": "2026-10-10",
-  "generated_at": "2026-10-10T16:07:15+09:00",
+  "report_date": "2026-10-11",
+  "generated_at": "2026-10-11T16:12:15+09:00",
   "timezone": "Asia/Seoul",
   "snapshots": [
     {
@@ -98,7 +98,7 @@
       "value": 1340.9000244140625,
       "previous_value": 1342.989990234375,
       "change_percent": -0.1556203572260273,
-      "price_date": "2026-10-10",
+      "price_date": "2026-10-11",
       "previous_date": "2026-10-08",
       "error": null
     },
@@ -109,10 +109,10 @@
       "decimals": 4,
       "unit": "",
       "status": "ok",
-      "value": 6.674300193786621,
+      "value": 6.692200183868408,
       "previous_value": 6.702099800109863,
-      "change_percent": -0.41478950108720936,
-      "price_date": "2026-10-10",
+      "change_percent": -0.14770917379196558,
+      "price_date": "2026-10-11",
       "previous_date": "2026-10-08",
       "error": null
     },
