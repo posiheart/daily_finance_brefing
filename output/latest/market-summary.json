@@ -1,7 +1,7 @@
 {
   "title": "전일 시장 요약",
-  "report_date": "2026-10-31",
-  "generated_at": "2026-10-31T15:59:45+09:00",
+  "report_date": "2026-11-01",
+  "generated_at": "2026-11-01T16:32:04+09:00",
   "timezone": "Asia/Seoul",
   "snapshots": [
     {
@@ -112,7 +112,7 @@
       "value": 6.6539998054504395,
       "previous_value": 6.660999774932861,
       "change_percent": -0.10508887132476552,
-      "price_date": "2026-10-31",
+      "price_date": "2026-11-01",
       "previous_date": "2026-10-30",
       "error": null
     },
