@@ -1,7 +1,7 @@
 {
   "title": "전일 시장 요약",
-  "report_date": "2026-11-08",
-  "generated_at": "2026-11-08T16:19:28+09:00",
+  "report_date": "2026-11-09",
+  "generated_at": "2026-11-09T16:58:26+09:00",
   "timezone": "Asia/Seoul",
   "snapshots": [
     {
@@ -11,11 +11,11 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 5059.68994140625,
-      "previous_value": 5383.7998046875,
-      "change_percent": -6.020095007972959,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 5018.85009765625,
+      "previous_value": 5059.68994140625,
+      "change_percent": -0.807160996482903,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -25,11 +25,11 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 644.27001953125,
-      "previous_value": 678.4099731445312,
-      "change_percent": -5.032348427166755,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 638.969970703125,
+      "previous_value": 644.27001953125,
+      "change_percent": -0.8226440261772772,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -67,11 +67,11 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 3649.177001953125,
-      "previous_value": 3689.910888671875,
-      "change_percent": -1.1039260282356467,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 3660.791748046875,
+      "previous_value": 3649.177001953125,
+      "change_percent": 0.3182839880754962,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -81,11 +81,11 @@
       "decimals": 2,
       "unit": "",
       "status": "ok",
-      "value": 57434.76953125,
-      "previous_value": 61077.8984375,
-      "change_percent": -5.964725374397018,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 58775.5,
+      "previous_value": 57434.76953125,
+      "change_percent": 2.3343533537128813,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -109,11 +109,11 @@
       "decimals": 4,
       "unit": "",
       "status": "ok",
-      "value": 6.671000003814697,
-      "previous_value": 6.688000202178955,
-      "change_percent": -0.2541895611593903,
-      "price_date": "2026-11-08",
-      "previous_date": "2026-11-06",
+      "value": 6.688000202178955,
+      "previous_value": 6.673099994659424,
+      "change_percent": 0.2232876403988504,
+      "price_date": "2026-11-06",
+      "previous_date": "2026-11-05",
       "error": null
     },
     {
@@ -123,11 +123,11 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 4074.89990234375,
-      "previous_value": 4113.5,
-      "change_percent": -0.9383760217880122,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 4096.7998046875,
+      "previous_value": 4074.89990234375,
+      "change_percent": 0.5374341178578046,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -137,11 +137,11 @@
       "decimals": 2,
       "unit": "USD/트로이온스",
       "status": "ok",
-      "value": 51.803001403808594,
-      "previous_value": 52.233001708984375,
-      "change_percent": -0.8232349110846138,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 52.119998931884766,
+      "previous_value": 51.803001403808594,
+      "change_percent": 0.6119288834350645,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     },
     {
@@ -151,11 +151,11 @@
       "decimals": 2,
       "unit": "USD/배럴",
       "status": "ok",
-      "value": 90.83000183105469,
-      "previous_value": 90.5199966430664,
-      "change_percent": 0.3424714974423537,
-      "price_date": "2026-11-06",
-      "previous_date": "2026-11-05",
+      "value": 89.77999877929688,
+      "previous_value": 90.83000183105469,
+      "change_percent": -1.1560090615332586,
+      "price_date": "2026-11-09",
+      "previous_date": "2026-11-06",
       "error": null
     }
   ]
